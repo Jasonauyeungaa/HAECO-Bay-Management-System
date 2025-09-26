@@ -1,0 +1,11 @@
+registration,type,size,workType,priority,arrivalTime,departureTime
+B-HUA,A330,large,maintenance,normal,2024-01-15T08:00,2024-01-17T16:00
+B-HUB,A320,large,paint,high,2024-01-15T10:00,2024-01-20T14:00
+B-HUC,B737,large,inspection,normal,2024-01-15T14:00,2024-01-16T18:00
+B-HUD,A350,large,maintenance,urgent,2024-01-16T06:00,2024-01-18T20:00
+B-HUE,B777,large,storage,low,2024-01-16T12:00,2024-01-25T10:00
+B-HUF,A320,large,paint,normal,2024-01-17T08:00,2024-01-22T16:00
+B-HUG,B737,small,special,high,2024-01-17T10:00,2024-01-18T14:00
+B-HUH,A330,large,maintenance,normal,2024-01-18T07:00,2024-01-20T19:00
+B-HUI,B787,large,inspection,normal,2024-01-18T13:00,2024-01-19T17:00
+B-HUJ,A320,large,storage,low,2024-01-19T09:00,2024-01-28T15:00
