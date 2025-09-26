@@ -11,7 +11,7 @@ The system automates aircraft bay scheduling, movement planning, and optimizatio
 Video Demo:
 
 ## ▶️ How to Run
-	1.	Download this repository (or the /V6 folder).
+	1.	Download this repository.
 	2.	Open the folder on your computer.
 	3.	Locate index.html.
 	4.	Double-click index.html → it will open in your default browser.
