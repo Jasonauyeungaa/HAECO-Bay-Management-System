@@ -260,4 +260,4 @@ For technical support or feature requests, use the AI assistant or contact your 
 
 ### 👥 Credits
 
-Developed by Jason Au-Yeung Wai Chun and team during the AWS AI Hackathon Hong Kong 2025.
+Developed by Jason Au-Yeung Wai Chun and HAECO team during the AWS AI Hackathon Hong Kong 2025.
