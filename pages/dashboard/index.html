@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - HAECO Bay Management V6</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+    <div class="dashboard">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img src="../../assets/images/haeco-logo.jpg" alt="HAECO">
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active">
+                        <span class="nav-icon">📊</span>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../schedule/index.html" class="nav-link">
+                        <span class="nav-icon">📅</span>
+                        Schedule
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../bays/index.html" class="nav-link">
+                        <span class="nav-icon">🏢</span>
+                        Bay Status
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../analytics/index.html" class="nav-link">
+                        <span class="nav-icon">📈</span>
+                        Analytics
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../chat/index.html" class="nav-link">
+                        <span class="nav-icon">💬</span>
+                        AI Assistant
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../admin/index.html" class="nav-link">
+                        <span class="nav-icon">⚙️</span>
+                        Admin
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <h1 class="header-title">Dashboard</h1>
+                <div class="header-actions">
+                    <span id="currentDateTime" class="text-gray-4"></span>
+                    <button class="btn btn-secondary" onclick="authSystem.logout()">Logout</button>
+                </div>
+            </header>
+
+            <div class="grid grid-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Total Bays</h3>
+                    </div>
+                    <div class="text-center">
+                        <div style="font-size: 36px; font-weight: 700; color: var(--primary-blue);" id="totalBays">22</div>
+                        <p class="text-gray-4">Bays in Total</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Occupied</h3>
+                    </div>
+                    <div class="text-center">
+                        <div style="font-size: 36px; font-weight: 700; color: var(--warning-orange);" id="occupiedBays">0</div>
+                        <p class="text-gray-4">Currently Used</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Aircraft</h3>
+                    </div>
+                    <div class="text-center">
+                        <div style="font-size: 36px; font-weight: 700; color: var(--success-green);" id="totalAircraft">0</div>
+                        <p class="text-gray-4">Records</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Efficiency</h3>
+                    </div>
+                    <div class="text-center">
+                        <div style="font-size: 36px; font-weight: 700; color: var(--primary-blue);" id="efficiency">0%</div>
+                        <p class="text-gray-4">Bay Utilization</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Bay Status Overview</h3>
+                        <button class="btn btn-primary" onclick="window.location.href='../bays/index.html'">View All</button>
+                    </div>
+                    <div class="bay-grid" id="bayOverview">
+                        <!-- Bay slots will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Recent Activity</h3>
+                        <button class="btn btn-secondary" onclick="refreshActivity()">Refresh</button>
+                    </div>
+                    <div class="timeline" id="recentActivity">
+                        <div class="timeline-item">
+                            <div class="timeline-time">Now</div>
+                            <div class="timeline-content">
+                                <strong>System Started</strong><br>
+                                HAECO Bay Management V6 initialized
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Quick Actions</h3>
+                </div>
+                <div class="grid grid-4">
+                    <button class="btn btn-primary" onclick="window.location.href='../schedule/index.html'">
+                        Add Aircraft
+                    </button>
+                    <button class="btn btn-success" onclick="importData()">
+                        Import CSV
+                    </button>
+                    <button class="btn btn-warning" onclick="exportData()">
+                        Export Data
+                    </button>
+                    <button class="btn btn-secondary" onclick="window.location.href='../chat/index.html'">
+                        AI Assistant
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/core.js"></script>
+    <script src="../../js/ai-engine.js"></script>
+    <script src="../../js/floating-chat.js"></script>
+    <script src="../../js/guidelines.js"></script>
+    <script src="../../js/dashboard.js"></script>
+</body>
+</html>

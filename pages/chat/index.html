@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant - HAECO Bay Management V6</title>
+    <link rel="stylesheet" href="../../css/main.css">
+    <style>
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+            padding: 8px 0;
+        }
+        .typing-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gray-4);
+            animation: typing 1.4s infinite ease-in-out;
+        }
+        .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .quick-action-btn {
+            padding: 8px 16px;
+            background: var(--gray-1);
+            border: 1px solid var(--gray-2);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+        .quick-action-btn:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img src="../../assets/images/haeco-logo.jpg" alt="HAECO">
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../dashboard/index.html" class="nav-link">
+                        <span class="nav-icon">📊</span>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../schedule/index.html" class="nav-link">
+                        <span class="nav-icon">📅</span>
+                        Schedule
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../bays/index.html" class="nav-link">
+                        <span class="nav-icon">🏢</span>
+                        Bay Status
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../analytics/index.html" class="nav-link">
+                        <span class="nav-icon">📈</span>
+                        Analytics
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active">
+                        <span class="nav-icon">💬</span>
+                        AI Assistant
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../admin/index.html" class="nav-link">
+                        <span class="nav-icon">⚙️</span>
+                        Admin
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <h1 class="header-title">AI Assistant</h1>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" onclick="clearChat()">Clear Chat</button>
+                    <button class="btn btn-secondary" onclick="chatAssistant.exportChat()">Export Chat</button>
+                </div>
+            </header>
+
+            <div class="grid grid-4">
+                <div class="card" style="grid-column: 1 / 4; height: calc(100vh - 200px);">
+                    <div class="card-header">
+                        <h3 class="card-title">HAECO AI Assistant</h3>
+                        <div class="flex gap-2">
+                            <button class="btn btn-secondary" onclick="startNewChat()">New Chat</button>
+                            <span class="status status-active">Online</span>
+                        </div>
+                    </div>
+
+                    <div id="chatSuggestions" class="quick-actions" style="margin-bottom: 15px;">
+                        <!-- Dynamic suggestions will be populated by JavaScript -->
+                    </div>
+
+                    <div class="chat-container" style="height: calc(100% - 150px);">
+                        <div class="chat-messages" id="chatMessages">
+                            <!-- Messages will be populated by JavaScript -->
+                        </div>
+                        
+                        <form class="chat-input" id="chatForm">
+                            <input 
+                                type="text" 
+                                id="chatInput" 
+                                placeholder="Ask me about bay status, aircraft assignments, or system information..."
+                                autocomplete="off"
+                            >
+                            <button type="submit" id="sendButton" disabled>Send</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card" style="height: calc(100vh - 200px);">
+                    <div class="card-header">
+                        <h3 class="card-title">Chat History</h3>
+                        <button class="btn btn-secondary" onclick="clearAllChatHistory()" style="font-size: 12px; padding: 4px 8px;">Clear All</button>
+                    </div>
+                    <div id="chatHistory" style="height: calc(100% - 60px); overflow-y: auto;">
+                        <!-- Chat history will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-3">
+                <!-- <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">AI Capabilities</h3>
+                    </div>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 8px 0; border-bottom: 1px solid var(--gray-2);">
+                            <strong>Bay Management</strong><br>
+                            <span class="text-gray-4">Status, availability, assignments</span>
+                        </li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid var(--gray-2);">
+                            <strong>Aircraft Tracking</strong><br>
+                            <span class="text-gray-4">Schedules, locations, priorities</span>
+                        </li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid var(--gray-2);">
+                            <strong>Optimization</strong><br>
+                            <span class="text-gray-4">Smart recommendations, efficiency</span>
+                        </li>
+                        <li style="padding: 8px 0;">
+                            <strong>System Info</strong><br>
+                            <span class="text-gray-4">Time, statistics, reports</span>
+                        </li>
+                    </ul>
+                </div> -->
+
+                <!-- <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Professional Queries</h3>
+                    </div>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 5px 0;">
+                            <a href="#" onclick="askQuickQuestion('System Status Overview')" class="text-primary">
+                                "System Status Overview"
+                            </a>
+                        </li>
+                        <li style="padding: 5px 0;">
+                            <a href="#" onclick="askQuickQuestion('Bay Availability Report')" class="text-primary">
+                                "Bay Availability Report"
+                            </a>
+                        </li>
+                        <li style="padding: 5px 0;">
+                            <a href="#" onclick="askQuickQuestion('Optimization Recommendations')" class="text-primary">
+                                "Optimization Recommendations"
+                            </a>
+                        </li>
+                        <li style="padding: 5px 0;">
+                            <a href="#" onclick="askQuickQuestion('Current Operations Summary')" class="text-primary">
+                                "Current Operations Summary"
+                            </a>
+                        </li>
+                        <li style="padding: 5px 0;">
+                            <a href="#" onclick="askQuickQuestion('Performance Analytics')" class="text-primary">
+                                "Performance Analytics"
+                            </a>
+                        </li>
+                    </ul>
+                </div> -->
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">AI Intelligence Level</h3>
+                    </div>
+                    <div class="text-center">
+                        <div style="font-size: 36px; font-weight: 700; color: var(--primary-blue);" id="aiLevel">2</div>
+                        <p class="text-gray-4">Advanced Mode</p>
+                        <div style="margin-top: 15px;">
+                            <select id="intelligenceLevel" onchange="updateAILevel()" class="form-select">
+                                <!-- <option value="1">Basic</option> -->
+                                <option value="1">Standard</option>
+                                <option value="2" selected>Advanced</option>
+                                <option value="3">Expert</option>
+                                <!-- <option value="5">Master</option> -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function updateAILevel() {
+            const level = document.getElementById('intelligenceLevel').value;
+            document.getElementById('aiLevel').textContent = level;
+            
+            const levelNames = {
+                '1': 'Standard',
+                '2': 'Advanced', 
+                '3': 'Expert',
+            };
+            
+            document.querySelector('#aiLevel + p').textContent = levelNames[level] + ' Mode';
+            
+            if (window.aiEngine) {
+                window.aiEngine.intelligenceLevel = parseInt(level);
+            }
+        }
+    </script>
+
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/core.js"></script>
+    <script src="../../js/ai-engine.js"></script>
+    <script src="../../js/floating-chat.js"></script>
+    <script src="../../js/guidelines.js"></script>
+    <script src="../../js/chat.js"></script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - HAECO Bay Management V6</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+    <div class="dashboard">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img src="../../assets/images/haeco-logo.jpg" alt="HAECO">
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../dashboard/index.html" class="nav-link">
+                        <span class="nav-icon">📊</span>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../schedule/index.html" class="nav-link">
+                        <span class="nav-icon">📅</span>
+                        Schedule
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../bays/index.html" class="nav-link">
+                        <span class="nav-icon">🏢</span>
+                        Bay Status
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../analytics/index.html" class="nav-link">
+                        <span class="nav-icon">📈</span>
+                        Analytics
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../chat/index.html" class="nav-link">
+                        <span class="nav-icon">💬</span>
+                        AI Assistant
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active">
+                        <span class="nav-icon">⚙️</span>
+                        Admin
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <h1 class="header-title">System Administration</h1>
+                <div class="header-actions">
+                    <span class="text-gray-4" id="currentUser">Loading...</span>
+                    <button class="btn btn-secondary" onclick="authSystem.logout()">Logout</button>
+                </div>
+            </header>
+
+            <div class="grid grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">System Status</h3>
+                    </div>
+                    <div class="system-status">
+                        <div class="status-item">
+                            <span class="status status-active">Online</span>
+                            <span>System Status</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status status-active">Connected</span>
+                            <span>Database</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status status-active">Running</span>
+                            <span>AI Engine</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Storage Usage</h3>
+                    </div>
+                    <div class="storage-info">
+                        <div class="storage-item">
+                            <strong>Aircraft Data:</strong>
+                            <span id="aircraftStorage">0 KB</span>
+                        </div>
+                        <div class="storage-item">
+                            <strong>Bay Data:</strong>
+                            <span id="bayStorage">0 KB</span>
+                        </div>
+                        <div class="storage-item">
+                            <strong>Logs:</strong>
+                            <span id="logStorage">0 KB</span>
+                        </div>
+                        <div class="storage-item">
+                            <strong>Total:</strong>
+                            <span id="totalStorage">0 KB</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Quick Actions</h3>
+                </div>
+                <div class="quick-actions">
+                    <button class="btn btn-primary" onclick="backupData()">Backup Data</button>
+                    <button class="btn btn-warning" onclick="clearLogs()">Clear Logs</button>
+                    <button class="btn btn-secondary" onclick="resetSystem()">Reset System</button>
+                </div>
+            </div>
+            <div class="grid grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">User Management</h3>
+                        <button class="btn btn-primary" onclick="showAddUserModal()">Add User</button>
+                    </div>
+                    <div class="table-container">
+                        <table class="table" id="usersTable">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Name</th>
+                                    <th>Role</th>
+                                    <th>Last Login</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <!-- Users will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">System Settings</h3>
+                        <button class="btn btn-success" onclick="saveSettings()">Save Settings</button>
+                    </div>
+                    <form id="settingsForm">
+                        <div class="form-group">
+                            <label class="form-label">Auto-save Interval (seconds)</label>
+                            <input type="number" class="form-input" name="autoSaveInterval" min="10" max="300" value="30">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Maximum Log Entries</label>
+                            <input type="number" class="form-input" name="maxLogEntries" min="100" max="10000" value="1000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Default Towing Cost ($)</label>
+                            <input type="number" class="form-input" name="defaultTowingCost" min="100" max="2000" value="500">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">AI Intelligence Level</label>
+                            <select class="form-select" name="aiIntelligenceLevel">
+                                <option value="1">Basic</option>
+                                <option value="2">Standard</option>
+                                <option value="3" selected>Advanced</option>
+                                <option value="4">Expert</option>
+                                <option value="5">Master</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Data Management</h3>
+                    <div class="flex gap-1">
+                        <button class="btn btn-primary" onclick="importData()">Import Data</button>
+                        <button class="btn btn-secondary" onclick="exportAllData()">Export All</button>
+                    </div>
+                </div>
+                <div class="grid grid-4">
+                    <div class="data-section">
+                        <h4>Aircraft Data</h4>
+                        <p class="text-gray-4" id="aircraftCount">0 records</p>
+                        <div class="flex gap-1 mt-1">
+                            <button class="btn btn-secondary" onclick="exportAircraftData()">Export</button>
+                            <button class="btn btn-warning" onclick="clearAircraftData()">Clear</button>
+                        </div>
+                    </div>
+                    <div class="data-section">
+                        <h4>Bay Data</h4>
+                        <p class="text-gray-4" id="bayCount">23 bays</p>
+                        <div class="flex gap-1 mt-1">
+                            <button class="btn btn-secondary" onclick="exportBayData()">Export</button>
+                            <button class="btn btn-warning" onclick="resetBayData()">Reset</button>
+                        </div>
+                    </div>
+                    <!-- <div class="data-section">
+                        <h4>Movement Data</h4>
+                        <p class="text-gray-4" id="movementCount">0 records</p>
+                        <div class="flex gap-1 mt-1">
+                            <button class="btn btn-secondary" onclick="exportMovementData()">Export</button>
+                            <button class="btn btn-warning" onclick="clearMovementData()">Clear</button>
+                        </div>
+                    </div> -->
+                    <div class="data-section">
+                        <h4>System Logs</h4>
+                        <p class="text-gray-4" id="logCount">0 entries</p>
+                        <div class="flex gap-1 mt-1">
+                            <button class="btn btn-secondary" onclick="exportLogData()">Export</button>
+                            <button class="btn btn-warning" onclick="clearLogData()">Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">System Logs</h3>
+                    <div class="flex gap-1">
+                        <select id="logFilter" onchange="filterLogs()">
+                            <option value="all">All Logs</option>
+                            <option value="Aircraft Added">Aircraft Added</option>
+                            <option value="Bay Assignment">Bay Assignment</option>
+                            <option value="Bay Vacated">Bay Vacated</option>
+                            <option value="Data Import">Data Import</option>
+                        </select>
+                        <button class="btn btn-secondary" onclick="refreshLogs()">Refresh</button>
+                    </div>
+                </div>
+                <div id="systemLogs" style="max-height: 400px; overflow-y: auto;">
+                    <!-- Logs will be populated by JavaScript -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/core.js"></script>
+    <script src="../../js/ai-engine.js"></script>
+    <script src="../../js/floating-chat.js"></script>
+    <script src="../../js/guidelines.js"></script>
+    <script src="../../js/admin.js"></script>
+</body>
+</html>

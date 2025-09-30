@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bay Status - HAECO Bay Management V6</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+    <div class="dashboard">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img src="../../assets/images/haeco-logo.jpg" alt="HAECO">
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../dashboard/index.html" class="nav-link">
+                        <span class="nav-icon">📊</span>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../schedule/index.html" class="nav-link">
+                        <span class="nav-icon">📅</span>
+                        Schedule
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active">
+                        <span class="nav-icon">🏢</span>
+                        Bay Status
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../analytics/index.html" class="nav-link">
+                        <span class="nav-icon">📈</span>
+                        Analytics
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../chat/index.html" class="nav-link">
+                        <span class="nav-icon">💬</span>
+                        AI Assistant
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../admin/index.html" class="nav-link">
+                        <span class="nav-icon">⚙️</span>
+                        Admin
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <h1 class="header-title">Bay Status & Management</h1>
+                <div class="header-actions">
+                    <select id="bayFilter" onchange="filterBays()">
+                        <option value="all">All Bays</option>
+                        <option value="available">Available</option>
+                        <option value="occupied">Occupied</option>
+                        <option value="paint">Paint Bays</option>
+                        <option value="outer">Outer Bays</option>
+                        <option value="special">Special Bay</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="showDependencyView()">Show Dependencies</button>
+                </div>
+            </header>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Bay Layout</h3>
+                    <div class="bay-legend">
+                        <span id="layout-description">At 00:00</span>
+                    </div>
+                </div>
+                <div class="bay-layout" id="bayLayout">
+                    <!-- Bay layout will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Bay Details</h3>
+                    </div>
+                    <div id="bayDetails">
+                        <p class="text-center text-gray-4">Click on a bay to view details</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Movement Dependencies</h3>
+                        <button class="btn btn-secondary" onclick="calculateAllDependencies()">Calculate All</button>
+                    </div>
+                    <div id="dependencyInfo">
+                        <p class="text-center text-gray-4">Select a bay to see movement dependencies</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Bay Utilization Timeline</h3>
+                    <div class="timeline-controls">
+                        <button class="btn btn-secondary" onclick="previousDay()">← Previous</button>
+                        <span id="currentDate"></span>
+                        <button class="btn btn-secondary" onclick="nextDay()">Next →</button>
+                    </div>
+                </div>
+                <div id="utilizationTimeline">
+                    <!-- Timeline will be populated by JavaScript -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/core.js"></script>
+    <script src="../../js/ai-engine.js"></script>
+    <script src="../../js/floating-chat.js"></script>
+    <script src="../../js/guidelines.js"></script>
+    <script src="../../js/bays.js"></script>
+</body>
+</html>

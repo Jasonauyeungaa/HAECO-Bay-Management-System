@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - HAECO Bay Management V6</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+    <div class="dashboard">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img src="../../assets/images/haeco-logo.jpg" alt="HAECO">
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../dashboard/index.html" class="nav-link">
+                        <span class="nav-icon">📊</span>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../schedule/index.html" class="nav-link">
+                        <span class="nav-icon">📅</span>
+                        Schedule
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../bays/index.html" class="nav-link">
+                        <span class="nav-icon">🏢</span>
+                        Bay Status
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active">
+                        <span class="nav-icon">📈</span>
+                        Analytics
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../chat/index.html" class="nav-link">
+                        <span class="nav-icon">💬</span>
+                        AI Assistant
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../admin/index.html" class="nav-link">
+                        <span class="nav-icon">⚙️</span>
+                        Admin
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <h1 class="header-title">Analytics & Reports</h1>
+                <div class="header-actions">
+                    <select id="timeRange" onchange="updateTimeRange()">
+                        <option value="today">Today</option>
+                        <option value="week" selected>This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="quarter">This Quarter</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="exportReport()">Export Report</button>
+                </div>
+            </header>
+
+            <div class="grid grid-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Bay Efficiency</h3>
+                    </div>
+                    <div class="text-center">
+                        <div style="font-size: 36px; font-weight: 700; color: var(--success-green);" id="bayEfficiency">0%</div>
+                        <p class="text-gray-4">Average Utilization</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Aircraft Processed</h3>
+                    </div>
+                    <div class="text-center">
+                        <div style="font-size: 36px; font-weight: 700; color: var(--primary-blue);" id="aircraftProcessed">0</div>
+                        <p class="text-gray-4">Total Aircraft</p>
+                    </div>
+                </div>
+
+                <!-- <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Movement Cost</h3>
+                    </div>
+                    <div class="text-center">
+                        <div style="font-size: 36px; font-weight: 700; color: var(--warning-orange);" id="movementCost">$0</div>
+                        <p class="text-gray-4">Total Towing</p>
+                    </div>
+                </div> -->
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Optimization Score</h3>
+                    </div>
+                    <div class="text-center">
+                        <div style="font-size: 36px; font-weight: 700; color: var(--primary-blue);" id="optimizationScore">0</div>
+                        <p class="text-gray-4">AI Performance</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Bay Type Utilization</h3>
+                    </div>
+                    <div id="bayTypeChart">
+                        <!-- Chart will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Work Type Distribution</h3>
+                    </div>
+                    <div id="workTypeChart">
+                        <!-- Chart will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Activity Timeline</h3>
+                    <div class="timeline-controls">
+                        <button class="btn btn-secondary" onclick="previousPeriod()">← Previous</button>
+                        <span id="currentPeriod"></span>
+                        <button class="btn btn-secondary" onclick="nextPeriod()">Next →</button>
+                    </div>
+                </div>
+                <div id="activityTimeline">
+                    <!-- Timeline will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- <div class="grid grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Performance Metrics</h3>
+                    </div>
+                    <div class="table-container">
+                        <table class="table" id="metricsTable">
+                            <thead>
+                                <tr>
+                                    <th>Metric</th>
+                                    <th>Current</th>
+                                    <th>Target</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="metricsTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Recent Activity Log</h3>
+                        <button class="btn btn-secondary" onclick="refreshActivityLog()">Refresh</button>
+                    </div>
+                    <div id="activityLog" style="max-height: 300px; overflow-y: auto;">
+                    </div>
+                </div>
+            </div> -->
+        </main>
+    </div>
+
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/core.js"></script>
+    <script src="../../js/ai-engine.js"></script>
+    <script src="../../js/floating-chat.js"></script>
+    <script src="../../js/guidelines.js"></script>
+    <script src="../../js/analytics.js"></script>
+</body>
+</html>

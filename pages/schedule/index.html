@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule - HAECO Bay Management V6</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+    <div class="dashboard">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img src="../../assets/images/haeco-logo.jpg" alt="HAECO">
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../dashboard/index.html" class="nav-link">
+                        <span class="nav-icon">📊</span>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active">
+                        <span class="nav-icon">📅</span>
+                        Schedule
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../bays/index.html" class="nav-link">
+                        <span class="nav-icon">🏢</span>
+                        Bay Status
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../analytics/index.html" class="nav-link">
+                        <span class="nav-icon">📈</span>
+                        Analytics
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../chat/index.html" class="nav-link">
+                        <span class="nav-icon">💬</span>
+                        AI Assistant
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../admin/index.html" class="nav-link">
+                        <span class="nav-icon">⚙️</span>
+                        Admin
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <h1 class="header-title">Aircraft Schedule</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="showAddAircraftModal()">Add Aircraft</button>
+                    <button class="btn btn-secondary" onclick="downloadCSVTemplate()">Download Template</button>
+                    <button class="btn btn-secondary" onclick="importSchedule()">Import CSV</button>
+                </div>
+            </header>
+
+            <div class="grid grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">7-Day Timeline</h3>
+                        <div class="flex gap-1">
+                            <button class="btn btn-secondary" onclick="previousWeek()">← Previous</button>
+                            <button class="btn btn-secondary" onclick="nextWeek()">Next →</button>
+                        </div>
+                    </div>
+                    <div id="timelineView">
+                        <!-- Timeline will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Aircraft List</h3>
+                        <select id="filterStatus" onchange="filterAircraft()">
+                            <option value="all">All Status</option>
+                            <option value="scheduled">Scheduled</option>
+                            <option value="in-bay">In Bay</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="table-container">
+                        <table class="table" id="aircraftTable">
+                            <thead>
+                                <tr>
+                                    <th>Registration</th>
+                                    <th>Type</th>
+                                    <th>Work</th>
+                                    <th>Bay</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="aircraftTableBody">
+                                <!-- Aircraft rows will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Bay Assignment Optimizer</h3>
+                    <button class="btn btn-success" onclick="runOptimizer()">Optimize Assignments</button>
+                </div>
+                <div id="optimizerResults">
+                    <p class="text-center text-gray-4">Click "Optimize Assignments" to get AI-powered bay recommendations</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/core.js"></script>
+    <script src="../../js/ai-engine.js"></script>
+    <script src="../../js/floating-chat.js"></script>
+    <script src="../../js/guidelines.js"></script>
+    <script src="../../js/schedule.js"></script>
+</body>
+</html>
