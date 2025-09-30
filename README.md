@@ -8,7 +8,7 @@ A zero-install, browser-based web application (HTML/CSS/JavaScript) developed fo
 The system automates aircraft bay scheduling, movement planning, and optimization for HAECO’s maintenance base (23 bays).
 
 ## ▶️ Demo
-Video Demo:
+Video Demo: https://youtu.be/gnlqTdvpEt8
 
 ## ▶️ How to Run
 	1.	Download this repository.
